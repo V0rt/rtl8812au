@@ -39,6 +39,11 @@ inline struct proc_dir_entry *get_rtw_drv_proc(void)
 #define proc_get_parent_data(inode) PDE((inode))->parent->data
 #endif
 
+/* Kernel >= 6.1 (incl. Rockchip forks) uses pde_data() instead of PDE_DATA */
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0)) && !defined(PDE_DATA)
+#define PDE_DATA(inode) pde_data(inode)
+#endif
+
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 24))
 #define get_proc_net proc_net
 #else
